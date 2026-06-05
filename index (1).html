@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>cafe hoa tím – Cà Phê & Thuần Chay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --purple-deep: #4b1d5f;
+      --purple-mid: #7a3f9d;
+      --purple-light: #b185d4;
+      --cream: #f5eef8;
+      --warm-white: #fcf8ff;
+      --pink: #e3b9e6;
+      --text-dark: #321a38;
+      --text-muted: #6c4f72;
+      --accent: #d39fe5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(180deg, #eef6f2 0%, #f6f0fb 42%, #fcf6ff 100%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      perspective: 1400px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 12%, rgba(211,159,229,0.16) 0%, transparent 18%),
+        radial-gradient(circle at 84% 8%, rgba(149,92,172,0.1) 0%, transparent 16%),
+        radial-gradient(circle at 22% 78%, rgba(156,205,169,0.12) 0%, transparent 22%),
+        radial-gradient(circle at 70% 60%, rgba(137,183,144,0.08) 0%, transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,250,255,0.35));
+      filter: blur(2px);
+      pointer-events: none;
+      z-index: -1;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 50% 0%, rgba(248,240,255,0.8) 0%, transparent 30%),
+                        radial-gradient(circle at 5% 85%, rgba(196,214,190,0.12) 0%, transparent 16%),
+                        radial-gradient(circle at 95% 85%, rgba(196,214,190,0.12) 0%, transparent 16%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(245,238,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(122,63,157,0.18);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--purple-deep);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--purple-deep);
+      font-weight: 500; font-size: 0.9rem; letter-spacing: 0.04em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--purple-deep); color: var(--cream);
+      padding: 0.55rem 1.4rem; border-radius: 2rem;
+      font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; transition: background 0.25s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--purple-mid); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 5rem 4rem;
+      background: rgba(255,255,255,0.75);
+      background-image: radial-gradient(circle at top left, rgba(211,159,229,0.12), transparent 26%),
+                        radial-gradient(circle at bottom right, rgba(137,183,144,0.08), transparent 30%);
+      position: relative; overflow: hidden;
+      box-shadow: inset 0 0 120px rgba(255,255,255,0.55);
+      backdrop-filter: blur(8px);
+      transform-style: preserve-3d;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(211,159,229,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.28;
+      filter: saturate(1.25) brightness(0.94) blur(0.5px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-text { z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(122,63,157,0.12);
+      color: var(--purple-mid); border: 1px solid rgba(122,63,157,0.3);
+      padding: 0.35rem 1rem; border-radius: 2rem;
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1.2rem; font-weight: 500;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.12; color: var(--purple-deep);
+      margin-bottom: 1.2rem;
+    }
+    .hero-title em { color: var(--accent); font-style: italic; }
+    .hero-desc {
+      color: var(--text-muted); font-size: 1.05rem; line-height: 1.75;
+      max-width: 420px; margin-bottom: 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--purple-deep); color: var(--cream);
+      padding: 0.85rem 2rem; border-radius: 3rem;
+      font-size: 0.9rem; font-weight: 500; text-decoration: none;
+      transition: all 0.25s; border: 2px solid var(--purple-deep);
+    }
+    .btn-primary:hover { background: var(--purple-mid); border-color: var(--purple-mid); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--purple-deep);
+      padding: 0.85rem 2rem; border-radius: 3rem;
+      font-size: 0.9rem; font-weight: 500; text-decoration: none;
+      border: 2px solid var(--purple-deep); transition: all 0.25s;
+    }
+    .btn-outline:hover { background: var(--purple-deep); color: var(--cream); transform: translateY(-2px); }
+
+    .hero-image {
+      display: flex; justify-content: center; align-items: center;
+      position: relative; z-index: 1;
+      transform: translateZ(10px);
+    }
+    .hero-image::before {
+      content: '🌸';
+      position: absolute; top: -20px; right: -20px;
+      font-size: 4rem; opacity: 0.7;
+    }
+    .hero-flower,
+    .floating-leaf {
+      position: absolute; font-size: 3rem; opacity: 0.85;
+      animation: float-flowers 9s ease-in-out infinite;
+      pointer-events: none;
+      transform-origin: center;
+    }
+    .flower-1 { top: 20%; left: 10%; animation-delay: 0s; }
+    .flower-2 { top: 45%; right: 12%; animation-delay: 1.8s; }
+    .flower-3 { bottom: 18%; left: 25%; animation-delay: 3.2s; }
+    .leaf-1 { top: 12%; right: 18%; font-size: 2.6rem; animation-delay: 0.6s; }
+    .leaf-2 { top: 60%; left: 18%; font-size: 2.4rem; animation-delay: 1.3s; }
+    .leaf-3 { bottom: 12%; right: 28%; font-size: 2.8rem; animation-delay: 2.1s; }
+    @keyframes float-flowers {
+      0%,100% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-16px) rotate(12deg) scale(1.08); }
+    }
+    .hero-img-frame {
+      width: 380px; height: 480px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      background: linear-gradient(145deg, #a16bcf, #7a3f9d, #4b1d5f);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8rem; position: relative;
+      box-shadow: 0 30px 80px rgba(75,29,95,0.25);
+      animation: float 6s ease-in-out infinite;
+      overflow: hidden;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+    .hero-img-frame::after {
+      content: '';
+      position: absolute; inset: -12px;
+      border-radius: inherit;
+      border: 2px dashed rgba(211,159,229,0.4);
+    }
+    .hero-stat {
+      position: absolute; background: white;
+      padding: 0.8rem 1.2rem; border-radius: 1rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      font-weight: 700; font-size: 1.1rem; color: var(--purple-deep);
+    }
+    .hero-stat small { display: block; font-weight: 400; font-size: 0.75rem; color: var(--text-muted); }
+    .stat-1 { top: 12%; left: -8%; }
+    .stat-2 { bottom: 15%; right: -10%; }
+
+    /* ── SECTION HEADERS ── */
+    .section-label {
+      text-align: center; margin-bottom: 0.6rem;
+      font-size: 0.78rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--purple-mid); font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      text-align: center; color: var(--purple-deep);
+      margin-bottom: 0.8rem;
+    }
+    .section-desc {
+      text-align: center; color: var(--text-muted);
+      max-width: 540px; margin: 0 auto 3.5rem;
+      line-height: 1.7; font-size: 1rem;
+    }
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--purple-mid), var(--accent));
+      border-radius: 2px; margin: 0.8rem auto 1.2rem;
+    }
+    .menu-search, .menu-tabs, .section-title, .section-desc, .map-box, .footer-logo {
+      will-change: transform, opacity;
+    }
+    .menu-card {
+      transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease;
+      will-change: transform, opacity;
+    }
+    .menu-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 18px 40px rgba(75,29,95,0.16); }
+    .gallery-item { transition: transform 0.28s ease, box-shadow 0.28s ease; will-change: transform; }
+    .gallery-item:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 36px rgba(75,29,95,0.14); }
+    .nav-cta, .tab-btn {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease;
+    }
+    .nav-cta:hover, .tab-btn:hover { box-shadow: 0 12px 30px rgba(122,63,157,0.16); }
+
+    /* ── MENU ── */
+    #menu { padding: 6rem 5rem; background: linear-gradient(180deg, rgba(251,243,255,0.9), rgba(245,238,248,0.95)); }
+    .menu-tabs {
+      display: flex; justify-content: center; gap: 0.5rem;
+      margin-bottom: 3rem; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.6rem 1.5rem; border-radius: 2rem; border: none;
+      background: transparent; border: 1.5px solid rgba(122,63,157,0.25);
+      color: var(--text-muted); cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500; transition: all 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--purple-deep); color: var(--cream); border-color: var(--purple-deep);
+    }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .menu-card {
+      background: white; border-radius: 1.2rem;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(75,29,95,0.15); }
+    .menu-card-img {
+      height: 160px; background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative;
+    }
+    .menu-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+    .menu-card:hover .menu-card-img img {
+      transform: scale(1.06) rotate(-0.5deg);
+    }
+    .menu-tag {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--purple-mid); color: white;
+      padding: 0.25rem 0.7rem; border-radius: 1rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    }
+    .menu-card-body { padding: 1.2rem; }
+    .menu-card-body h3 { font-weight: 600; margin-bottom: 0.4rem; color: var(--purple-deep); }
+    .menu-card-body p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.8rem; }
+    .menu-footer { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .menu-price { display: none; font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+    .menu-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--purple-light); }
+    .detail-btn {
+      border: 1px solid rgba(122,63,157,0.25);
+      background: rgba(255,255,255,0.95);
+      color: var(--purple-deep);
+      border-radius: 2rem;
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .detail-btn:hover {
+      background: var(--purple-mid);
+      color: var(--cream);
+      border-color: var(--purple-mid);
+    }
+    .menu-price.visible { display: block; }
+
+    /* ── GALLERY ── */
+    #gallery { padding: 6rem 5rem; background: linear-gradient(180deg, rgba(246,232,248,0.96), rgba(255,250,255,0.98)); background-image: radial-gradient(circle at 15% 20%, rgba(152,207,156,0.1), transparent 22%), radial-gradient(circle at 82% 18%, rgba(221,176,236,0.08), transparent 18%); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 220px);
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: 1rem; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; cursor: pointer;
+      transition: transform 0.3s; position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(75,29,95,0.5);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+      color: white; font-size: 1.5rem; font-family: 'Playfair Display', serif;
+    }
+    .g1 { grid-column: 1/3; background: linear-gradient(135deg, #d9b6eb, #9c57c3); }
+    .g2 { grid-column: 3/4; background: linear-gradient(135deg, #d39fe5, #8e4aa9); }
+    .g3 { grid-column: 4/5; background: linear-gradient(135deg, #b185d4, #5f2a7a); }
+    .g4 { grid-column: 1/2; background: linear-gradient(135deg, #e9d3f2, #b78adb); }
+    .g5 { grid-column: 2/4; background: linear-gradient(135deg, #a16bcf, #6a2f7a); }
+    .g6 { grid-column: 4/5; background: linear-gradient(135deg, #cfa5e3, #8c4ba8); }
+
+    /* ── CONTACT ── */
+    #contact { padding: 6rem 5rem; background: linear-gradient(180deg, rgba(255,247,253,0.95), rgba(245,238,248,0.98)); background-image: radial-gradient(circle at 12% 14%, rgba(187,212,190,0.12), transparent 18%), radial-gradient(circle at 90% 78%, rgba(211,159,229,0.09), transparent 20%); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start; max-width: 1000px; margin: 0 auto;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--purple-deep); margin-bottom: 1.5rem;
+    }
+    .contact-item {
+      display: flex; gap: 1rem; margin-bottom: 1.4rem; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(122,63,157,0.1); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    }
+    .contact-item strong { color: var(--purple-deep); font-size: 0.9rem; display: block; }
+    .contact-item span { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+    .map-box {
+      border-radius: 1.2rem; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+      height: 300px; background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem; text-align: center;
+      border: 2px dashed rgba(122,63,157,0.3);
+    }
+    .map-box .map-pin { font-size: 3rem; }
+    .map-box p { color: var(--text-muted); font-size: 0.9rem; }
+    .map-box a {
+      background: var(--purple-deep); color: white;
+      padding: 0.6rem 1.4rem; border-radius: 2rem;
+      text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      transition: background 0.2s;
+    }
+    .map-box a:hover { background: var(--purple-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--purple-deep); color: rgba(255,255,255,0.9);
+      text-align: center; padding: 2.5rem;
+      font-size: 0.88rem; line-height: 1.8;
+    }
+    footer strong { color: var(--accent); }
+    footer .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: white; margin-bottom: 0.5rem;
+    }
+    footer .social-links {
+      display: flex; gap: 1rem; justify-content: center; margin: 1rem 0;
+    }
+    footer .social-links a {
+      color: rgba(255,255,255,0.7); font-size: 1.4rem;
+      text-decoration: none; transition: color 0.2s;
+    }
+    footer .social-links a:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up, .fade-left, .fade-right {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-left { transform: translateX(-32px); }
+    .fade-right { transform: translateX(32px); }
+    .fade-up.visible, .fade-left.visible, .fade-right.visible {
+      opacity: 1; transform: translate3d(0,0,0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; text-align: center; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-btns { justify-content: center; }
+      .hero-image { display: none; }
+      #menu, #gallery, #contact { padding: 5rem 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 180px);
+      }
+      .g1, .g2, .g3, .g4, .g5, .g6 { grid-column: auto; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">🌸 Hoa <span>Tím</span> Café</div>
+    <ul class="nav-links">
+      <li><a href="#menu">Thực Đơn</a></li>
+      <li><a href="#gallery">Hình Ảnh</a></li>
+      <li><a href="#contact">Liên Hệ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Tìm Đường</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-text fade-left">
+      <div class="hero-badge fade-up">🌸 Hương hoa tím · Thuần chay</div>
+      <h1 class="hero-title">
+        Thưởng thức hương<br/><em>hoa tím</em> nhẹ nhàng<br/>và thanh khiết
+      </h1>
+      <p class="hero-desc">
+        Cà phê thủ công và ẩm thực thuần chay được chế biến từ nguyên liệu tươi sạch,
+        kết hợp với thiên nhiên xanh mướt mang đến cảm giác thư thái từ 7h đến 22h mỗi ngày.
+      </p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn-primary">Xem Thực Đơn</a>
+        <a href="#contact" class="btn-outline">Ghé Thăm Chúng Tôi</a>
+      </div>
+    </div>
+    <div class="hero-image fade-right">
+      <div class="hero-img-frame">🍃</div>
+      <div class="hero-stat stat-1">
+        <span>50+</span>
+        <small>Món thuần chay</small>
+      </div>
+      <div class="hero-stat stat-2">
+        <span>⭐ 4.7</span>
+        <small>Đánh giá khách hàng</small>
+      </div>
+    </div>
+    <div class="hero-flower flower-1">🌺</div>
+    <div class="hero-flower flower-2">🌼</div>
+    <div class="hero-flower flower-3">🌸</div>
+    <div class="floating-leaf leaf-1">🍃</div>
+    <div class="floating-leaf leaf-2">🍃</div>
+    <div class="floating-leaf leaf-3">🍃</div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <p class="section-label fade-up">Thực Đơn</p>
+    <h2 class="section-title fade-up">Hương vị thuần chay<br/>cho mỗi ngày</h2>
+    <div class="section-divider fade-up"></div>
+    <p class="section-desc fade-up">
+      Tất cả món ăn và đồ uống đều được làm từ nguyên liệu thực vật tươi sạch.
+      Trang món bán chạy đầu tiên giúp bạn chọn nhanh, còn toàn bộ menu sẽ có trong tab Tất Cả.
+    </p>
+
+    <div class="menu-search fade-up" style="text-align:center; margin-bottom:1.8rem;">
+      <input id="searchInput" type="text" placeholder="Tìm món yêu thích..." style="max-width:380px;width:100%;padding:0.85rem 1rem;border-radius:2rem;border:1px solid rgba(122,63,157,0.25);outline:none;font-size:0.95rem;color:var(--text-dark);" oninput="searchMenu(this.value)" />
+      <p style="margin-top:0.65rem;font-size:0.9rem;color:var(--text-muted);">Tìm nhanh món theo tên, chỉ hiển thị các món phù hợp với tìm kiếm.</p>
+    </div>
+
+    <div class="menu-tabs fade-up">
+      <button class="tab-btn active" onclick="filterMenu('bestseller', this)">🔥 Món Bán Chạy</button>
+      <button class="tab-btn" onclick="filterMenu('all', this)">Tất Cả</button>
+      <button class="tab-btn" onclick="filterMenu('drink', this)">☕ Đồ Uống</button>
+      <button class="tab-btn" onclick="filterMenu('dessert', this)">🍰 Tráng Miệng</button>
+      <button class="tab-btn" onclick="filterMenu('food', this)">🍲 Đồ Ăn</button>
+    </div>
+
+    <div class="menu-grid fade-up" id="menuGrid"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <p class="section-label fade-up">Hình Ảnh</p>
+    <h2 class="section-title fade-up">Không gian & Món ngon</h2>
+    <div class="section-divider fade-up"></div>
+    <p class="section-desc fade-up">Góc view đẹp của Cafe Hoa Tím, nơi bạn cảm nhận trọn vẹn hương vị và không gian êm dịu.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item g1 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80" alt="Góc view cafe hoa tím" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Góc view Cafe Hoa Tím</div></div>
+      <div class="gallery-item g2 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1200&q=80" alt="Cà phê sữa" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Cà Phê Sữa</div></div>
+      <div class="gallery-item g3 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80" alt="Sinh tố dâu" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Sinh Tố Dâu</div></div>
+      <div class="gallery-item g4 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80" alt="Không gian quán" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Không gian quán</div></div>
+      <div class="gallery-item g5 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1524182576060-8fd4b3d11ab5?auto=format&fit=crop&w=1200&q=80" alt="Trà hoa quả" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Trà Hoa Quả</div></div>
+      <div class="gallery-item g6 fade-up" style="padding:0;overflow:hidden;"><img src="https://images.unsplash.com/photo-1483478550801-ceba5fe50b62?auto=format&fit=crop&w=1200&q=80" alt="Cafe hoa tím" style="width:100%;height:100%;object-fit:cover"/><div class="gallery-overlay">Cafe Hoa Tím</div></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label fade-up">Liên Hệ</p>
+    <h2 class="section-title fade-up">Đến thăm chúng tôi</h2>
+    <div class="section-divider fade-up"></div>
+    <p class="section-desc fade-up">Chúng tôi luôn chào đón bạn với nụ cười và tách cà phê ấm áp.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <h3>Thông Tin Quán</h3>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <strong>Địa chỉ</strong>
+            <span>TL 851, Xã Hòa Long<br/>Huyện Lai Vung, Tỉnh Đồng Tháp</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <strong>Giờ mở cửa</strong>
+            <span>Hằng ngày: 7:00 – 22:00</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <strong>Điện thoại</strong>
+            <span>0848 157 089</span>
+          </div>
+        </div>
+
+
+        <div class="contact-item">
+          <div class="contact-icon">�</div>
+          <div>
+            <strong>Facebook</strong>
+            <span>facebook.com/cafehoatim</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <div class="map-box">
+          <div class="map-pin">🗺️</div>
+          <p><strong>Hoa Tím Café</strong><br/>TL 851, Xã Hòa Long, Huyện Lai Vung, Tỉnh Đồng Tháp</p>
+          <a href="https://maps.app.goo.gl/3GhwG6AVCfNJ1RgJA" target="_blank">Nhấp vào đây để xem Google Maps →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">🌸 Hoa Tím Café</div>
+    <div class="social-links">
+      <a href="#" title="Facebook">📘</a>
+      <a href="#" title="Facebook">📘</a>
+      <a href="#" title="Zalo">💬</a>
+    </div>
+    <p>
+      <strong>Hoa Tím Café</strong> · TL 851, Xã Hòa Long, Huyện Lai Vung, Tỉnh Đồng Tháp · 0848 157 089
+    </p>
+    <p style="margin-top:0.5rem; font-size:0.8rem; opacity:0.6;">
+      © 2025 Hoa Tím Café. Tất cả quyền được bảo lưu.
+    </p>
+  </footer>
+
+  <script>
+    // ── MENU DATA ──
+    const menuItems = [
+      { cat:'drink', img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',   name:'Cà Phê Đen',         desc:'Cà phê Arabica rang mộc, đậm đà và cân bằng.',                        price:'18.000đ', tag:'Bestseller' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80',   name:'Cà Phê Sữa',         desc:'Cà phê sữa thơm mềm, vị ngọt dịu và quyện sữa.',                          price:'22.000đ', tag:'Bestseller' },
+      { cat:'dessert', img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',   name:'Kem Trái Dừa',       desc:'Kem trái dừa mát lạnh, dừa tươi thơm ngon và béo ngậy.',                       price:'35.000đ', tag:'Bestseller' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80',   name:'Sinh Tố Dâu',        desc:'Sinh tố dâu tươi xay mịn, ngọt thanh và mát lạnh.',                        price:'30.000đ', tag:'Bestseller' },
+      { cat:'dessert', img:'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80', name:'Tráng Miệng Trái Cây Dĩa', desc:'Dĩa trái cây tươi ngon kết hợp cùng trái cây mùa vụ.', price:'35.000đ', tag:'Bestseller' },
+      { cat:'food', img:'https://images.unsplash.com/photo-1518976024611-227f0f97da0b?auto=format&fit=crop&w=800&q=80', name:'Bánh Xèo',           desc:'Bánh xèo chay giòn rụm, nhân nấm và rau củ thơm ngon.',                   price:'40.000đ', tag:'Bestseller' },
+      { cat:'food', img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80', name:'Chả Giò Chiên',      desc:'Chả giò chay giòn tan, cuốn cùng rau sống và nước chấm chua ngọt.',        price:'25.000đ', tag:'Bestseller' },
+      { cat:'food', img:'https://images.unsplash.com/photo-1512058564366-c9e7fbfcca02?auto=format&fit=crop&w=800&q=80', name:'Mì Cay',             desc:'Mì cay chay đậm vị ớt, nấm và rau củ, ấm bụng ngay lần đầu thưởng thức.', price:'35.000đ', tag:'Bestseller' },
+      { cat:'food', img:'https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=800&q=80', name:'Lẩu Chay',           desc:'Lẩu chay đặc biệt với ba kích cỡ 99k / 149k / 199k, đầy rau và nấm.',       price:'99.000đ / 149.000đ / 199.000đ', tag:'Bestseller' },
+      { cat:'food', img:'https://images.unsplash.com/photo-1512058564366-c9e7fbfcca02?auto=format&fit=crop&w=800&q=80', name:'Gỏi Cuốn Chay',      desc:'Gỏi cuốn chay thanh mát, cuộn rau sống và nấm đậm vị.',                    price:'25.000đ', tag:'Bestseller' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',   name:'Trà Đường',          desc:'Trà đường thơm ngọt, giải nhiệt nhẹ nhàng.',                             price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1527515637461-8f0f764d446c?auto=format&fit=crop&w=800&q=80',   name:'Lipton',             desc:'Lipton sảng khoái, phù hợp khi cần giải nhiệt nhanh.',                      price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80',   name:'Trà Mãng Cầu',       desc:'Trà mãng cầu thơm béo, ngọt dịu và dễ uống.',                             price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=800&q=80',   name:'Trà Tắc',            desc:'Trà tắc chua nhẹ, thơm nồng, giải khát ngày hè.',                         price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1464971429417-ae2e2df6c1c8?auto=format&fit=crop&w=800&q=80',   name:'Trà Ổi',             desc:'Trà ổi thơm tự nhiên, vị ngọt vừa phải hợp khẩu vị nhiều người.',         price:'28.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',   name:'Rau Má',             desc:'Rau má tươi xay mát lạnh, thanh ngọt tự nhiên.',                            price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',   name:'Rau Má Sữa',        desc:'Rau má sữa béo mịn, thơm mùi lá xanh và sữa dịu nhẹ.',                     price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1464306076884-ec24f5f06af5?auto=format&fit=crop&w=800&q=80',   name:'Trà Dâu',            desc:'Trà dâu mát lạnh, vị trái cây dịu dàng.',                                 price:'28.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',   name:'Trà Sữa Truyền Thống',desc:'Trà sữa truyền thống tròn vị, thơm và mềm.',                             price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1510615302009-1d3404ec7180?auto=format&fit=crop&w=800&q=80',   name:'Trà Sữa Thái',       desc:'Trà sữa Thái ngọt thơm đặc trưng, dễ say lòng.',                               price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1532635254-08277538d4b6?auto=format&fit=crop&w=800&q=80',   name:'Trà Sữa Dâu',       desc:'Trà sữa dâu mịn mượt, vị ngọt tự nhiên.',                                 price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1505628346881-b72b27e84530?auto=format&fit=crop&w=800&q=80',   name:'Yaourt Dâu',         desc:'Yaourt dâu mịn mềm, chua ngọt cân bằng.',                                 price:'28.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1550265326-88a4d650d77a?auto=format&fit=crop&w=800&q=80',   name:'Yaourt Việt Quất',   desc:'Yaourt việt quất tươi, mọng nước.',                                       price:'28.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1510626176961-4b53283a6fcb?auto=format&fit=crop&w=800&q=80',   name:'Cacao Đá',          desc:'Cacao đá mát lạnh, vị đắng ngọt dịu.',                                     price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',   name:'Cacao Sữa',         desc:'Cacao sữa ấm áp, béo vừa phải.',                                             price:'28.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1514539079130-25950c84f7f8?auto=format&fit=crop&w=800&q=80',   name:'Chanh Dây',         desc:'Chanh dây tươi, chua mát và thơm nồng.',                                 price:'25.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=800&q=80',   name:'Chanh Tươi',        desc:'Chanh tươi mát lành, giải nhiệt ngày hè.',                                price:'20.000đ', tag:'' },
+      { cat:'drink', img:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80',   name:'Đá Me',             desc:'Đá me chua ngọt đặc trưng, giải khát thơm mát.',                          price:'20.000đ', tag:'' },
+    ];
+
+    function renderMenu(filter, query = '') {
+      const grid = document.getElementById('menuGrid');
+      let items;
+      if (filter === 'all') {
+        items = [...menuItems];
+      } else if (filter === 'bestseller') {
+        items = menuItems.filter(i => i.tag === 'Bestseller');
+      } else {
+        items = menuItems.filter(i => i.cat === filter);
+      }
+      if (query) {
+        const q = query.toLowerCase();
+        items = items.filter(item => item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q));
+      }
+      if (!items.length) {
+        grid.innerHTML = `<p style="grid-column:1/-1; color:var(--text-muted); text-align:center; font-size:1rem;">Không tìm thấy món phù hợp. Hãy thử từ khóa khác hoặc chọn lại tab.</p>`;
+        return;
+      }
+      grid.innerHTML = items.map(item => `
+        <div class="menu-card">
+          <div class="menu-card-img" style="padding:0;overflow:hidden;">
+            <img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.background='#f8f0ff';this.style.display='none'"/>
+            ${item.tag ? `<span class="menu-tag">${item.tag}</span>` : ''}
+          </div>
+          <div class="menu-card-body">
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+            <div class="menu-footer">
+              <button type="button" class="detail-btn" onclick="togglePrice(this)">Chi tiết</button>
+              <span class="menu-price">${item.price}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function togglePrice(button) {
+      const card = button.closest('.menu-card');
+      const priceTag = card.querySelector('.menu-price');
+      if (!priceTag) return;
+      const isVisible = priceTag.classList.toggle('visible');
+      button.textContent = isVisible ? 'Đóng' : 'Chi tiết';
+    }
+
+    function filterMenu(cat, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const query = document.getElementById('searchInput').value.trim();
+      renderMenu(cat, query);
+      animateCards();
+    }
+
+    function searchMenu(query) {
+      const activeBtn = document.querySelector('.tab-btn.active');
+      const activeCat = activeBtn ? activeBtn.getAttribute('onclick').match(/filterMenu\('(.+?)'/)[1] : 'bestseller';
+      renderMenu(activeCat, query.trim());
+      animateCards();
+    }
+
+    function animateCards() {
+      document.querySelectorAll('.menu-card').forEach((card, i) => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0)';
+        }, i * 60);
+      });
+    }
+
+    // ── SCROLL ANIMATIONS ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right').forEach(el => observer.observe(el));
+
+    // ── NAV SCROLL ──
+    const heroSection = document.getElementById('hero');
+    const heroImage = document.querySelector('.hero-image');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      document.querySelector('nav').style.background =
+        scrollY > 60 ? 'rgba(245,240,232,0.98)' : 'rgba(245,240,232,0.92)';
+      if (heroSection) {
+        heroSection.style.backgroundPosition = `center calc(50% + ${Math.min(scrollY * 0.16, 45)}px)`;
+      }
+      if (heroImage) {
+        heroImage.style.transform = `translateZ(10px) translateY(${Math.min(scrollY * 0.08, 18)}px)`;
+      }
+    });
+
+    // ── INIT ──
+    renderMenu('bestseller');
+    animateCards();
+  </script>
+</body>
+</html>
